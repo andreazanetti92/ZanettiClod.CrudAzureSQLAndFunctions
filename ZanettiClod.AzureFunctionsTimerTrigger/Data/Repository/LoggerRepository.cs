@@ -25,7 +25,10 @@ namespace ZanettiClod.AzureFunctionsTimerTrigger.Data.Repository
         {
             try
             {
-                await DB.OpenAsync();
+                // Non serve perché viene richiamata nel metodo sotto
+                // Dove c'è una connessione avviata
+                // Se lo fai anche qua ti lancierà un'eccezzione
+                // await DB.OpenAsync();
 
                 const string queryCount = "SELECT COUNT(*) FROM Products";
 
@@ -36,7 +39,8 @@ namespace ZanettiClod.AzureFunctionsTimerTrigger.Data.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                string messagge = ex.Message + "\n" + ex.StackTrace.ToString();
+                throw new Exception(messagge);
             }
             finally
             {
@@ -75,7 +79,8 @@ namespace ZanettiClod.AzureFunctionsTimerTrigger.Data.Repository
             }
             catch (Exception ex)
             {
-                throw new Exception(ex.Message);
+                string messagge = ex.Message + "\n" + ex.StackTrace.ToString();
+                throw new Exception(messagge);
             }
             finally
             {
